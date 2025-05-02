@@ -1,5 +1,17 @@
 const Event = require('../models/calendarSchema.js')
 
+// GET
+
+const getEvents = async (req,res) => {
+    try {
+      const events = await Event.find();
+      res.status(200).json(events);
+    } catch (error) {
+      res.status(500).json({ message: error.message});
+    }
+  
+  };
+
 
 
 // CREATE an event
@@ -16,4 +28,4 @@ const createEvent = async (req, res) => {
 };
 
 
-module.exports = {createEvent};
+module.exports = {createEvent, getEvents};

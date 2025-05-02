@@ -41,6 +41,27 @@ mongoose.connect(MONGO_URI)
 const calendars = require('./models/calendarSchema');
 
 
+//Find
+
+app.get('/events', async (req,res) =>{
+    try {
+      const events = await calendars.find().lean();
+      res.render('events',
+        {
+          title: 'our events',
+          events: events
+        }
+      )
+  }
+  catch (error) {
+    res.status(404).render('events',{
+      title: 'Something is wrong!'
+    })
+    console.log(error);
+  }
+  });
+
+
 
 // CREATE
 app.get('/add-events', (req,res) => {
@@ -61,3 +82,4 @@ app.post('/events', async (req, res) => {
 app.get('/', (req, res) => {
     res.render('index');
 });
+
